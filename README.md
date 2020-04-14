@@ -8,6 +8,11 @@ You enter the text you want to find. You probably want to use a text string that
 
 You then enter the html you want to replace it with. There's a handy standard editor for this. Linking to images is a bit of an issue since the standard admin editor doesn't have the repository button. So host your images elsewhere on the site, or on www.imgur.com or similar and just hardlink to them.
 
+Can you add ... ?
+-----------------
+
+No. If you're looking for a more complete substitution filter plugin that offers user- or course-aware replacements, built in keywords, language awareness, etc I suggest you look at https://github.com/michael-milette/moodle-filter_filtercodes.
+
 Compatibility
 -------------
 
