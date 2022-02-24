@@ -37,11 +37,19 @@ class filter_substitute extends moodle_text_filter {
                 $replace = trim(get_config('filter_substitute', 'replace_' . $i));
                 if (!empty($replace)) {
                     $text = str_replace($find, $replace, $text);
+                    $text = self::replace_internals($text);
                 }
             }
 
         }
 
         return $text;
+    }
+
+    private static function replace_internals($text) {
+        global $USER, $COURSE;
+        $find = array_map(function($n){return "%%{$n}%%";}, ['COURSE:ID','COURSE:FULLNAME','COURSE:SHORTNAME','COURSE:IDNUMBER','USER:ID','USER:FIRSTNAME','USER:LASTNAME','USER:EMAIL','USER:USERNAME','USER:INSTITUTION','USER:DEPARTMENT']);
+        $repl = [$COURSE->id, $COURSE->fullname, $COURSE->shortname, $COURSE->idnumber, $USER->id, $USER->firstname, $USER->lastname, $USER->email, $USER->username, $USER->institution, $USER->department];
+        return str_replace($find, $repl, $text);
     }
 }

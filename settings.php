@@ -26,6 +26,12 @@ defined('MOODLE_INTERNAL') || die();
 
 if ($ADMIN->fulltree) {
 
+	$settings->add(new admin_setting_description(
+		'builtins',
+		new lang_string('builtins', 'filter_substitute'),
+		new lang_string('builtinsdesc', 'filter_substitute'),
+	));
+
 	// arbitarily support 16 substitutions
 	for ( $i = 0 ; $i < 16; $i++ ) {
 	    $item = new admin_setting_configtext('filter_substitute/find_' . $i,
