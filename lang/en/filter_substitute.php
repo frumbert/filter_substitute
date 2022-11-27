@@ -33,7 +33,7 @@ $string['replace'] = 'Replace with';
 $string['replace_help'] = 'When text is encountered, this is the value it will be replaced with.';
 $string['builtins'] = 'Common substitutions';
 $string['builtinsdesc'] = "The following identifiers can be injected into the HTML and will be replaced with their counterpart values:
-    <code>%%COURSE:ID%%</code>, <code>%%COURSE:FULLNAME%%</code>, <code>%%COURSE:SHORTNAME%%</code>, <code>%%COURSE:IDNUMBER%%</code>, <code>%%USER:ID%%</code>, <code>%%USER:FIRSTNAME%%</code>, <code>%%USER:LASTNAME%%</code>, <code>%%USER:EMAIL%%</code>, <code>%%USER:USERNAME%%</code>, <code>%%USER:INSTITUTION%%</code>, <code>%%USER:DEPARTMENT%%</code>
+    <code>%%PAGE:CONTEXTID%%</code>, <code>%%PAGE:CMID%%</code>, <code>%%PAGE:MODULE%%</code>, <code>%%COURSE:ID%%</code>, <code>%%COURSE:FULLNAME%%</code>, <code>%%COURSE:SHORTNAME%%</code>, <code>%%COURSE:IDNUMBER%%</code>, <code>%%USER:ID%%</code>, <code>%%USER:FIRSTNAME%%</code>, <code>%%USER:LASTNAME%%</code>, <code>%%USER:EMAIL%%</code>, <code>%%USER:USERNAME%%</code>, <code>%%USER:INSTITUTION%%</code>, <code>%%USER:DEPARTMENT%%</code>, <code>%%SESSION:KEY%%</code>
 ";
 
 $string['privacy:metadata'] = 'The Substitute filter does not store any personal data.';

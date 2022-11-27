@@ -27,8 +27,8 @@ defined('MOODLE_INTERNAL') || die();
 
 class filter_substitute extends moodle_text_filter {
 
+    // currently support 16 replacements
     public function filter($text, array $options = array()) {
-        global $CFG, $COURSE;
 
         for ( $i = 0 ; $i < 16; $i++ ) {
 
@@ -46,10 +46,52 @@ class filter_substitute extends moodle_text_filter {
         return $text;
     }
 
+    // we have some hard coded replacments we can find
+    // in the unlikely format %%AREA:VARIABLE%%
     private static function replace_internals($text) {
-        global $USER, $COURSE;
-        $find = array_map(function($n){return "%%{$n}%%";}, ['COURSE:ID','COURSE:FULLNAME','COURSE:SHORTNAME','COURSE:IDNUMBER','USER:ID','USER:FIRSTNAME','USER:LASTNAME','USER:EMAIL','USER:USERNAME','USER:INSTITUTION','USER:DEPARTMENT']);
-        $repl = [$COURSE->id, $COURSE->fullname, $COURSE->shortname, $COURSE->idnumber, $USER->id, $USER->firstname, $USER->lastname, $USER->email, $USER->username, $USER->institution, $USER->department];
+        global $USER, $COURSE, $PAGE;
+        $cmid = @$PAGE->cm->id; // ignore if not set
+        $modname = @$PAGE->cm->modname; // ignore if not set
+        $find = array_map(function($n){return "%%{$n}%%";}, [
+            'PAGE:CONTEXTID',
+            'PAGE:CMID',
+            'PAGE:MODULE',
+
+            'COURSE:ID',
+            'COURSE:FULLNAME',
+            'COURSE:SHORTNAME',
+            'COURSE:IDNUMBER',
+
+            'USER:ID',
+            'USER:FIRSTNAME',
+            'USER:LASTNAME',
+            'USER:EMAIL',
+            'USER:USERNAME',
+            'USER:INSTITUTION',
+            'USER:DEPARTMENT',
+
+            'SESSION:KEY'
+        ]);
+        $repl = [
+            $PAGE->context->id,
+            $cmid,
+            $modname,
+
+            $COURSE->id,
+            $COURSE->fullname,
+            $COURSE->shortname,
+            $COURSE->idnumber,
+
+            $USER->id,
+            $USER->firstname,
+            $USER->lastname,
+            $USER->email,
+            $USER->username,
+            $USER->institution,
+            $USER->department,
+
+            sesskey()
+        ];
         return str_replace($find, $repl, $text);
     }
 }
