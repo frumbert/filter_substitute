@@ -25,6 +25,12 @@ It can be handy to have access to things like the course id or the user firstnam
 | %%USER:USERNAME%% | Username |
 | %%USER:INSTITUTION%% | User instutuion |
 | %%USER:DEPARTMENT%% | User department |
+| %%PAGE:CONTEXTID%% | Page context id |
+| %%PAGE:CMID%% | CourseModule id (if set) |
+| %%PAGE:MODULE%% | Module name (if set) |
+| %%PREF:the-name%% | User Preference value for `the-name` |
+
+Built-in replacements are applied AFTER user replacements. So you can rely on built-in values in your custom replacement values.
 
 Can you add ... ?
 -----------------
