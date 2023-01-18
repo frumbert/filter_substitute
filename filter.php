@@ -30,24 +30,24 @@ class filter_substitute extends moodle_text_filter {
     // currently support 16 replacements
     public function filter($text, array $options = array()) {
 
+        // process user replacements
         for ( $i = 0 ; $i < 16; $i++ ) {
-
             $find = trim(get_config('filter_substitute', 'find_' . $i));
             if (!empty($find)) {
                 $replace = trim(get_config('filter_substitute', 'replace_' . $i));
                 if (!empty($replace)) {
                     $text = str_replace($find, $replace, $text);
-                    $text = self::replace_internals($text);
                 }
             }
-
         }
-
+        // then internal known values
+        $text = self::replace_internals($text);
+ 
         return $text;
     }
 
     // we have some hard coded replacments we can find
-    // in the unlikely format %%AREA:VARIABLE%%
+    // in the unlikely format %%AREA:VARIABLE%% (case-sensitive)
     private static function replace_internals($text) {
         global $USER, $COURSE, $PAGE;
         $cmid = @$PAGE->cm->id; // ignore if not set
@@ -74,24 +74,35 @@ class filter_substitute extends moodle_text_filter {
         ]);
         $repl = [
             $PAGE->context->id,
-            $cmid,
-            $modname,
+            $cmid ?? 0,
+            $modname ?? '',
 
             $COURSE->id,
             $COURSE->fullname,
             $COURSE->shortname,
             $COURSE->idnumber,
 
-            $USER->id,
-            $USER->firstname,
-            $USER->lastname,
-            $USER->email,
-            $USER->username,
-            $USER->institution,
-            $USER->department,
+            $USER->id ?? 0,
+            $USER->firstname ?? '',
+            $USER->lastname ?? '',
+            $USER->email ?? '',
+            $USER->username ?? '',
+            $USER->institution ?? '',
+            $USER->department ?? '',
 
             sesskey()
         ];
-        return str_replace($find, $repl, $text);
+        $text = str_replace($find, $repl, $text);
+
+        if (preg_grep('/%%PREF:([^%]*)%%/', $text)) {
+            $prefs = [];
+            preg_match_all('/%%PREF:([^%]*)%%/', $text, $prefs);
+            foreach ($prefs[1] as $index => $pref) {
+                $value = get_user_preferences($pref, '', $USER);
+                $text = str_replace($prefs[0][$index], $value, $text);
+            }
+        }
+
+        return $text;
     }
 }
