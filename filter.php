@@ -94,7 +94,7 @@ class filter_substitute extends moodle_text_filter {
         ];
         $text = str_replace($find, $repl, $text);
 
-        if (preg_grep('/%%PREF:([^%]*)%%/', $text)) {
+        if (preg_match('/%%PREF:([^%]*)%%/', $text)) {
             $prefs = [];
             preg_match_all('/%%PREF:([^%]*)%%/', $text, $prefs);
             foreach ($prefs[1] as $index => $pref) {
