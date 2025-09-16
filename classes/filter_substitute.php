@@ -22,12 +22,14 @@
  * @copyright  tim@avideelearning.com
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
+namespace filter_substitute;
 
 defined('MOODLE_INTERNAL') || die();
 
-class filter_substitute extends moodle_text_filter {
+class text_filter extends \core_filters\text_filter {
 
     // currently support 16 replacements
+    #[\Override]
     public function filter($text, array $options = array()) {
 
         // process user replacements
