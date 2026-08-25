@@ -40,7 +40,7 @@ if ($ADMIN->fulltree) {
                                         	'',
                                         	PARAM_RAW);
 	    $settings->add($item);
-    	$item = new admin_setting_confightmleditor('filter_substitute/replace_' . $i,
+    	$item = new admin_setting_configtextarea('filter_substitute/replace_' . $i,
 												new lang_string('replace', 'filter_substitute'),
                                                 new lang_string('replace_help', 'filter_substitute'),
                                                 '');
